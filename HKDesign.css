@@ -1,0 +1,154 @@
+/* Ensure body fills viewport and remove default margin */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#universalblack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: -2;
+  /* lower than #background */
+}
+
+/* Full-screen background image */
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(HK1.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+  filter: brightness(30%);
+  transition: opacity 3s ease;
+}
+
+
+/* Game title/logo container */
+#hktitle {
+  position: relative;
+  z-index: 1;
+  height: 332px;
+
+  text-align: center;
+  margin-top: 5vh;
+  /* optional spacing from top */
+}
+
+#title {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transform: translateY(10%);
+}
+
+/* Play button container */
+#content {
+  display: flex;
+  justify-content: center;
+  /* horizontal centering */
+  align-items: center;
+  /* vertical centering */
+  height: 50vh;
+  /* half viewport height */
+  position: relative;
+  z-index: 1;
+  gap: 20px;
+}
+
+#playbutton,
+#exitbutton {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.5rem;
+  /* make it bigger, adjust as needed */
+  color: white;
+  /* font color */
+  background: transparent;
+  /* transparent background */
+  border: 2px solid white;
+  /* optional: white border */
+  border-radius: 5px;
+  /* optional: rounded corners */
+  padding: 0.5rem 1.5rem;
+  /* space inside button */
+  cursor: pointer;
+  /* pointer on hover */
+  transition: all 0.3s ease;
+  /* smooth hover effect */
+  letter-spacing: 3px;
+}
+
+#exitbutton {
+  display: none;
+}
+
+/* Optional hover effect */
+#playbutton:hover,
+#exitbutton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  /* slight highlight on hover */
+  color: white;
+}
+
+
+#progress-container {
+  width: 690px;
+  height: 134px;
+  margin: 20px auto;
+  position: relative;
+  transform: translateY(40%);
+  display: flex;
+  justify-content: center;
+
+  border-radius: 5px;
+
+
+  z-index: 2;
+}
+
+/* ----------------- Progress Bar Container ----------------- */
+#progressbar {
+  width: 690px;
+  height: 134px;
+  background: url('HKLoadContainer.png') no-repeat center center;
+  /* Background image */
+  background-size: auto 100%;
+  /* fill container, may crop edges */
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  display: none;
+}
+
+/* ----------------- Progress Bar Fill ----------------- */
+#progressbar .ui-progressbar-value {
+  background: url('HKLoading.png') no-repeat left center;
+  background-size: cover;
+  /* Fill image */
+  background-size: auto 100%;
+  /* scale height, keep width proportional */
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+/* ----------------- Progress Text ----------------- */
+#progressText {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}

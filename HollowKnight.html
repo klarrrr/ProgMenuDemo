@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hollow Knight</title>
+
+    <link rel="icon" href="hk_logo.png">
+
+    <!-- hk css -->
+    <link rel="stylesheet" href="HKDesign.css">
+
+    <!-- jquery ui css -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <!-- jquery ui -->
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <div id="universalblack"></div>
+    <div id="background"></div>
+
+    <div id="hktitle">
+        <img src="HKTitle.png" id="title" alt="Hollow Knight Title">
+    </div>
+
+    <div id="progress-container">
+        <div id="progressbar"></div>
+        <!-- <div id="progressText">0%</div> -->
+    </div>
+
+    <div id="content">
+        <button id="playbutton">PLAY</button>
+        <button id="exitbutton">EXIT</button>
+    </div>
+
+    <script>
+
+        // Main Loading Interval 3 seconds
+        const main_interval = 3000;
+        // For progress bar interval
+        const ms_per_percent = main_interval / 100;
+        // Fade interval;
+        const fade_interval = 500;
+
+        // CLICKING PLAY BUTTON
+        $('#playbutton').on('click', function () {
+
+            // Hide Play Button
+            $('#playbutton').fadeOut(main_interval, () => {
+                // Show Exit Button
+                $('#exitbutton').fadeIn(main_interval);
+                $("#title").fadeOut(fade_interval);
+            });
+
+            // PROGRESS BAR
+
+            LoadingBar();
+
+            // BACKGROUND
+
+            // Fade out current background
+            $('#background').css('opacity', 0);
+
+            setTimeout(function () {
+                // Change image
+                $('#background').css('background-image', 'url("HK2.webp")');
+                // Fade it back in
+                $('#background').css('opacity', 1);
+            }, main_interval); // match the transition duration
+
+        });
+
+        // CLICKING EXIT BUTTON
+        $('#exitbutton').on('click', function () {
+            // Hide Exit Button
+            $(this).fadeOut(main_interval, () => {
+                // Show Play Button
+                $('#playbutton').fadeIn(main_interval);
+                $("#title").fadeIn(fade_interval);
+            });
+
+            // PROGRESS BAR
+            LoadingBar();
+
+            // BACKGROUND
+
+            // Fade out current background
+            $('#background').css('opacity', 0);
+
+            setTimeout(function () {
+                // Change image
+                $('#background').css('background-image', 'url("HK1.webp")');
+                // Fade it back in
+                $('#background').css('opacity', 1);
+            }, main_interval); // match the transition duration
+        });
+
+        function LoadingBar() {
+            // PROGRESS BAR
+
+            $("#progressbar").fadeIn(fade_interval);
+
+            $("#progressbar").progressbar({
+                value: 0
+            });
+
+            var progress = 0;
+            var interval = setInterval(function () {
+                progress += 1;
+                $("#progressbar").progressbar("value", progress);
+                // $("#progressText").text(progress + "%");
+                if (progress >= 100) {
+                    $("#progressbar").fadeOut(fade_interval);
+                    clearInterval(interval);
+                }
+            }, ms_per_percent);
+
+        }
+
+    </script>
+</body>
+
+</html>
