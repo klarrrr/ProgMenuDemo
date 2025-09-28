@@ -41,54 +41,46 @@ body {
 #hktitle {
   position: relative;
   z-index: 1;
-  height: 332px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5vh;
   text-align: center;
-  margin-top: 5vh;
-  /* optional spacing from top */
 }
 
 #title {
   display: block;
   margin: 0 auto;
   position: relative;
-  transform: translateY(10%);
 }
 
 /* Play button container */
 #content {
   display: flex;
   justify-content: center;
-  /* horizontal centering */
   align-items: center;
-  /* vertical centering */
-  height: 50vh;
-  /* half viewport height */
   position: relative;
   z-index: 1;
   gap: 20px;
+  position: absolute;
+  height: min-content;
+  bottom: 0;
+  width: 100%;
 }
 
 #playbutton,
 #exitbutton {
   font-family: 'Times New Roman', Times, serif;
   font-size: 1.5rem;
-  /* make it bigger, adjust as needed */
   color: white;
-  /* font color */
   background: transparent;
-  /* transparent background */
   border: 2px solid white;
-  /* optional: white border */
   border-radius: 5px;
-  /* optional: rounded corners */
   padding: 0.5rem 1.5rem;
-  /* space inside button */
   cursor: pointer;
-  /* pointer on hover */
   transition: all 0.3s ease;
-  /* smooth hover effect */
   letter-spacing: 3px;
+  margin-bottom: 64px;
 }
 
 #exitbutton {
@@ -99,17 +91,17 @@ body {
 #playbutton:hover,
 #exitbutton:hover {
   background: rgba(255, 255, 255, 0.1);
-  /* slight highlight on hover */
   color: white;
 }
 
 
 #progress-container {
   width: 690px;
-  height: 134px;
-  margin: 20px auto;
+  margin: auto;
+  margin-top: 0;
+  margin-bottom: 0;
   position: relative;
-  transform: translateY(40%);
+  padding: 24px;
   display: flex;
   justify-content: center;
 
@@ -122,11 +114,9 @@ body {
 /* ----------------- Progress Bar Container ----------------- */
 #progressbar {
   width: 690px;
-  height: 134px;
+  min-height: 134px;
   background: url('HKLoadContainer.png') no-repeat center center;
-  /* Background image */
   background-size: auto 100%;
-  /* fill container, may crop edges */
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -137,9 +127,7 @@ body {
 #progressbar .ui-progressbar-value {
   background: url('HKLoading.png') no-repeat left center;
   background-size: cover;
-  /* Fill image */
   background-size: auto 100%;
-  /* scale height, keep width proportional */
   border-radius: 10px;
   height: 100%;
   width: 100%;
@@ -151,4 +139,51 @@ body {
   margin-top: 10px;
   font-weight: bold;
   font-family: Arial, sans-serif;
+}
+
+#choose-title {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  display: none;
+}
+
+#select-char {
+  display: none;
+}
+
+#select-char-button {
+  appearance: none;
+  color: white;
+  background: transparent !important;
+  border: 2px solid white;
+  border-radius: 5px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  width: min-content;
+  display: none;
+}
+
+#select-char-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#char-img {
+  display: none;
+  height: 400px;
+  background-color: #0000007f;
+  padding: 24px;
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

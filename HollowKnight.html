@@ -28,11 +28,20 @@
 
     <div id="hktitle">
         <img src="HKTitle.png" id="title" alt="Hollow Knight Title">
+        <h1 id="choose-title">Choose Character</h1>
+        <select name="select-char" id="select-char" title="select-char">
+            <optgroup label="Hollow Knight">
+                <option value="Knight">Knight</option>
+            </optgroup>
+            <optgroup label="Silksong">
+                <option value="Hornet">Hornet</option>
+            </optgroup>
+        </select>
     </div>
 
     <div id="progress-container">
         <div id="progressbar"></div>
-        <!-- <div id="progressText">0%</div> -->
+        <img src="knight.webp" alt="Knight" id="char-img">
     </div>
 
     <div id="content">
@@ -44,10 +53,13 @@
 
         // Main Loading Interval 3 seconds
         const main_interval = 3000;
-        // For progress bar interval
-        const ms_per_percent = main_interval / 100;
         // Fade interval;
         const fade_interval = 500;
+        // Delayed main_interval
+        const delayed_interval = main_interval + 1000
+
+        // Instantiate the select menu from jquery ui earlier
+        $('#select-char').selectmenu()
 
         // CLICKING PLAY BUTTON
         $('#playbutton').on('click', function () {
@@ -55,13 +67,19 @@
             // Hide Play Button
             $('#playbutton').fadeOut(main_interval, () => {
                 // Show Exit Button
-                $('#exitbutton').fadeIn(main_interval);
-                $("#title").fadeOut(fade_interval);
+                // After title fading out is finished execute the following
+                $("#title").fadeOut(fade_interval, () => {
+                    $('#exitbutton').fadeIn(fade_interval);
+                    $("#choose-title").fadeIn(fade_interval)
+                    // After fade in of select select menu of jquery
+                    $("#select-char-button").fadeIn(fade_interval, () => { })
+                    $("#char-img").fadeIn(fade_interval)
+                });
             });
 
             // PROGRESS BAR
 
-            LoadingBar();
+            LoadingBar(3000, true);
 
             // BACKGROUND
 
@@ -80,14 +98,20 @@
         // CLICKING EXIT BUTTON
         $('#exitbutton').on('click', function () {
             // Hide Exit Button
-            $(this).fadeOut(main_interval, () => {
+            $(this).fadeOut(fade_interval, () => {
                 // Show Play Button
-                $('#playbutton').fadeIn(main_interval);
-                $("#title").fadeIn(fade_interval);
-            });
+                $("#choose-title").fadeOut(main_interval, () => {
+                    $('#playbutton').fadeIn(main_interval);
+                    $("#title").fadeIn(fade_interval);
+                })
+                $("#select-char-button").fadeOut(fade_interval)
+                $("#char-img").fadeOut(fade_interval, () => {
+                    // PROGRESS BAR
+                    LoadingBar(3000, true);
 
-            // PROGRESS BAR
-            LoadingBar();
+
+                })
+            });
 
             // BACKGROUND
 
@@ -102,27 +126,98 @@
             }, main_interval); // match the transition duration
         });
 
-        function LoadingBar() {
+        // Loading bar is overloaded
+
+        function LoadingBar(millisec, determinate) {
             // PROGRESS BAR
+
+            let ms_per_percent = millisec / 100
 
             $("#progressbar").fadeIn(fade_interval);
 
-            $("#progressbar").progressbar({
-                value: 0
-            });
+            if (determinate) {
+                $("#progressbar").progressbar({
+                    value: 0
+                });
 
-            var progress = 0;
-            var interval = setInterval(function () {
-                progress += 1;
-                $("#progressbar").progressbar("value", progress);
-                // $("#progressText").text(progress + "%");
-                if (progress >= 100) {
-                    $("#progressbar").fadeOut(fade_interval);
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress += 1;
+                    $("#progressbar").progressbar("value", progress);
+                    if (progress >= 100) {
+                        $("#progressbar").fadeOut(fade_interval);
+                        clearInterval(interval);
+                    }
+                }, ms_per_percent);
+            } else {
+                $("#progressbar").progressbar({
+                    value: false
+                });
+
+                var interval = setInterval(function () {
+                    $("#progressbar").fadeOut(millisec);
                     clearInterval(interval);
-                }
-            }, ms_per_percent);
-
+                }, ms_per_percent);
+            }
         }
+
+        function LoadingBar(millisec, determinate, funky) {
+            // PROGRESS BAR
+
+            let ms_per_percent = millisec / 100
+
+            $("#progressbar").fadeIn(fade_interval);
+
+            if (determinate) {
+                $("#progressbar").progressbar({
+                    value: 0
+                });
+
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress += 1;
+                    $("#progressbar").progressbar("value", progress);
+                    if (progress >= 100) {
+                        $("#progressbar").fadeOut(fade_interval);
+                        clearInterval(interval);
+                    }
+                }, ms_per_percent);
+            } else {
+                $("#progressbar").progressbar({
+                    value: false
+                });
+
+                var interval = setInterval(function () {
+                    $("#progressbar").fadeOut(millisec, funky);
+                    clearInterval(interval);
+                }, ms_per_percent);
+            }
+        }
+
+        $("#select-char").on("selectmenuselect", function (event, ui) {
+            $("#char-img").fadeOut(fade_interval, () => {
+
+                // Store some code in a function
+                let funky = function () {
+                    // KNIGHT
+                    if (ui.item.value == "Knight") {
+                        // Fade Out first
+                        $("#char-img").attr("src", "knight.webp")
+                        $("#char-img").fadeIn(fade_interval)
+                    } else {
+                        // HORNET
+                        $("#char-img").attr("src", "hornet.webp")
+                        $("#char-img").fadeIn(fade_interval)
+                    }
+                }
+
+                // Loading bar
+                // Pass the function here
+                LoadingBar(3000, false, funky)
+
+            });
+        });
+
 
     </script>
 </body>
