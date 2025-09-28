@@ -26,6 +26,7 @@
     <div id="universalblack"></div>
     <div id="background"></div>
 
+    <!-- Title Page/Area -->
     <div id="hktitle">
         <img src="HKTitle.png" id="title" alt="Hollow Knight Title">
         <h1 id="choose-title">Choose Character</h1>
@@ -39,11 +40,13 @@
         </select>
     </div>
 
+    <!-- Loading Bar(s) -->
     <div id="progress-container">
         <div id="progressbar"></div>
         <img src="knight.webp" alt="Knight" id="char-img">
     </div>
 
+    <!-- Buttons -->
     <div id="content">
         <button id="playbutton">PLAY</button>
         <button id="exitbutton">EXIT</button>
@@ -63,9 +66,11 @@
 
         // CLICKING PLAY BUTTON
         $('#playbutton').on('click', function () {
-
+            
             // Hide Play Button
-            $('#playbutton').fadeOut(main_interval, () => {
+            
+            $('#playbutton')
+            .fadeOut(main_interval, () => {
                 // Show Exit Button
                 // After title fading out is finished execute the following
                 $("#title").fadeOut(fade_interval, () => {
@@ -75,7 +80,11 @@
                     $("#select-char-button").fadeIn(fade_interval, () => { })
                     $("#char-img").fadeIn(fade_interval)
                 });
-            });
+            })
+            .attr("disabled", "disabled")
+                setTimeout(() => {
+                    $('#playbutton').removeAttr("disabled");
+                }, 3000);
 
             // PROGRESS BAR
 
@@ -216,6 +225,20 @@
                 LoadingBar(3000, false, funky)
 
             });
+
+            $("#select-char").selectmenu("disable");
+            setTimeout(() => {
+                $(this).selectmenu("enable");
+            }, 4000);   
+
+            $("#exitbutton")
+            .attr("disabled", "disabled")
+            .css("opacity", "0.5");
+            setTimeout(() => {
+                $("#exitbutton")
+                .removeAttr("disabled")
+                .css("opacity", "1");
+            }, 4000);
         });
 
 
